@@ -140,11 +140,47 @@ h6,
 a {
   text-decoration: none;
 }
+.btn.btn-dark.btn-lg.text-uppercase.w-100{
+  width: 30% !important; 
+}
+.bg-light{
+  display:flex;
+  flex-direction: column;
+}
+.row.justify-content-center{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.d-flex.flex-wrap.gap-2{
+  margin-right: auto;
+}
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
 
-/* container fluid */
+.star {
+  font-size: 24px;
+  color: gray; /* Color predeterminado */
+  transition: color 0.3s ease;
+}
+
+.star:hover,
+.star:hover ~ .star {
+  color: orange; /* Color al hacer hover */
+}
+
+.star.active {
+  color: gold; /* Color cuando está seleccionada */
+}
+/* bi fluid */
 .container-fluid {
   /* width: 98%; */
   max-width: 1800px;
+  flex-direction: column;
 }
 
 /* Dropdown */

@@ -1,14 +1,41 @@
-const databaseURL = "https://landing-eaf66-default-rtdb.firebaseio.com/nombresito.json";
+const databaseURL = "https://landing-eaf66-default-rtdb.firebaseio.com/feedback.json"; // Cambié el nombre a feedback.json para más claridad
+
+let currentRating = 0;
+
+function rate(star) {
+    // Establece la calificación
+    currentRating = star;
+
+    // Actualiza el input hidden con la calificación
+    document.getElementById("rating").value = star;
+
+    // Cambia el color de las estrellas (activas hasta la estrella seleccionada)
+    const stars = document.querySelectorAll('.star');
+    stars.forEach((el, index) => {
+        if (index < star) {
+            el.style.color = 'gold'; // Color dorado para las estrellas seleccionadas
+        } else {
+            el.style.color = 'gray'; // Color gris para las estrellas no seleccionadas
+        }
+    });
+}
 
 let sendData = () => {
-
     // Obtén los datos del formulario
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries()); // Convierte FormData a objeto
-    data['saved'] = new Date().toLocaleString('es-CO', { timeZone: 'America/Guayaquil' })
+
+    // Agrega la calificación seleccionada
+    const rating = document.querySelector('input[name="rating"]:checked');
+    if (rating) {
+        data['rating'] = rating.value;
+    }
+
+    data['saved'] = new Date().toLocaleString('es-CO', { timeZone: 'America/Guayaquil' });
+
     // Realiza la petición POST con fetch
     fetch(databaseURL, {
-        method: 'POST', // Método de la solicitud
+        method: 'POST', 
         headers: {
             'Content-Type': 'application/json' // Especifica que los datos están en formato JSON
         },
@@ -18,98 +45,57 @@ let sendData = () => {
             if (!response.ok) {
                 throw new Error(`Error en la solicitud: ${response.statusText}`);
             }
-            return response.json(); // Procesa la respuesta como JSON
+            return response.json(); 
         })
         .then(result => {
-            alert('Agradeciendo tu preferencia, nos mantenemos actualizados y enfocados en atenderte como mereces'); // Maneja la respuesta con un mensaje
-            form.reset()
+            alert('Gracias por tu comentario y calificación!'); // Mensaje de éxito
+            form.reset();
             getData();
         })
         .catch(error => {
-            alert('Hemos experimentado un error. ¡Vuelve pronto!'); // Maneja el error con un mensaje
+            alert('Error, por favor intenta nuevamente.'); // Manejo de errores
         });
+};
 
-
-}
 let getData = async () => {
     try {
-
-        // Realiza la petición fetch a la URL de la base de datos
+        // Realiza la petición fetch para obtener los datos
         const response = await fetch(databaseURL, {
             method: 'GET'
         });
 
-        // Verifica si la respuesta es exitosa
         if (!response.ok) {
-            alert('Hemos experimentado un error. ¡Vuelve pronto!'); // Maneja el error con un mensaje
+            alert('Hemos experimentado un error. ¡Vuelve pronto!');
+            return;
         }
 
-        // Convierte la respuesta en formato JSON
         const data = await response.json();
 
         if (data != null) {
-
-            // Cuente el número de suscriptores registrados por fecha a partir del objeto data
-            let countSuscribers = new Map()
-
-            if (Object.keys(data).length > 0) {
-                for (let key in data) {
-
-                    let { email, saved } = data[key]
-
-                    let date = saved.split(",")[0]
-
-                    let count = countSuscribers.get(date) || 0;
-                    countSuscribers.set(date, count + 1)
-                }
-            }
-
-
-            // END
-
-            // Genere y agregue filas de una tabla HTML para mostrar fechas y cantidades de suscriptores almacenadas 
-            if (countSuscribers.size > 0) {
-
-                subscribers.innerHTML = ''
-
-                let index = 1;
-                for (let [date, count] of countSuscribers) {
-                    let rowTemplate = `
- <tr>
-     <th>${index}</th>
-     <td>${date}</td>
-     <td>${count}</td>
- </tr>`
-
-
-                    subscribers.innerHTML += rowTemplate
-                    index++;
-                }
-            }
-            // END
-
+            // No se necesita manejo de suscriptores, así que omito esta parte
         }
 
     } catch (error) {
-        // Muestra cualquier error que ocurra durante la petición
-        alert('Hemos experimentado un error. ¡Vuelve pronto!'); // Maneja el error con un mensaje
+        alert('Hemos experimentado un error. ¡Vuelve pronto!');
     }
-}
+};
+
 let ready = () => {
-    console.log('DOM está listo')
+    console.log('DOM está listo');
     getData();
-}
+};
 
 let loaded = () => {
     let myform = document.getElementById('form');
     myform.addEventListener('submit', (eventSubmit) => {
         eventSubmit.preventDefault();
-        const emailElement = document.querySelector('.form-control-lg');
-        const emailText = emailElement.value;
 
-        if (emailText.length === 0) {
-            emailElement.focus()
-            emailElement.animate(
+        const commentElement = document.querySelector('#input-form');
+        const commentText = commentElement.value;
+
+        if (commentText.length === 0) {
+            commentElement.focus();
+            commentElement.animate(
                 [
                     { transform: "translateX(0)" },
                     { transform: "translateX(50px)" },
@@ -120,15 +106,13 @@ let loaded = () => {
                     duration: 400,
                     easing: "linear",
                 }
-            )
+            );
             return;
         }
+
         sendData();
     });
-}
-
-
+};
 
 window.addEventListener("DOMContentLoaded", ready);
-window.addEventListener("load", loaded)
-
+window.addEventListener("load", loaded);
