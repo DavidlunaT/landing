@@ -23,15 +23,15 @@ CSS STRUCTURE:
 
 --------------------------------------------------------------*/
 body {
-  --heading-font: "Marcellus", Roboto, sans-serif;
+  --heading-font: "Merienda", Roboto, sans-serif;
   --heading-font-weight: 400;
-  --heading-color: #111;
+  --heading-color: #F1F1F0;
   --heading-line-height: 1.24;
 
   --swiper-theme-color: #8C907E;
 
   /* bootstrap */
-  --bs-body-font-family: "Jost", Roboto, sans-serif;
+  --bs-body-font-family: "Montserrat", Roboto, sans-serif;
   --bs-body-font-size: 18px;
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
@@ -143,6 +143,7 @@ a {
 .btn.btn-dark.btn-lg.text-uppercase.w-100{
   width: 30% !important; 
 }
+
 .bg-light{
   display:flex;
   flex-direction: column;
@@ -163,8 +164,9 @@ a {
 }
 
 .star {
-  font-size: 24px;
-  color: gray; /* Color predeterminado */
+  width: 16px;
+  height: 16px;
+  color: black; /* Color predeterminado */
   transition: color 0.3s ease;
 }
 

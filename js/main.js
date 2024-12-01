@@ -1,4 +1,4 @@
-const databaseURL = "https://landing-eaf66-default-rtdb.firebaseio.com/feedback.json"; // Cambié el nombre a feedback.json para más claridad
+const databaseURL = "https://landing-eaf66-default-rtdb.firebaseio.com/feedback.json"; 
 
 let currentRating = 0;
 
