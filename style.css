@@ -146,7 +146,20 @@ a {
 .btn.btn-dark.btn-lg.text-uppercase.w-100{
   width: 30% !important; 
 }
+.product-item:hover {
+  border: 2px solid #007bff; /* Resalta el borde en hover */
+  background-color: rgba(0, 123, 255, 0.1); /* Resalta el fondo */
+}
 
+.product-item:focus {
+  border: 2px solid #28a745; /* Resalta el borde en focus */
+  background-color: rgba(40, 167, 69, 0.1); /* Resalta el fondo */
+}
+  /* Mantener el estilo tras hacer click */
+  .product-item.clicked {
+    border: 2px solid #000000; /* Resalta el borde tras el click */
+    background-color: rgba(0, 123, 255, 0.1); /* Resalta el fondo tras el click */
+  }
 .bg-light{
   display:flex;
   flex-direction: column;

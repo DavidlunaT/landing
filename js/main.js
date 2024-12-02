@@ -157,9 +157,19 @@ clickableElements.forEach(element => {
 
         // Actualiza el valor del contador en el elemento con id 'cartC'
         document.getElementById('cartC').textContent = `Cart: (${cartCount})`;
+        document.getElementById('cartC2').textContent = `Cart: (${cartCount})`;
     });
 });
+// Seleccionamos todos los elementos con la clase 'product-item'
+const productItems = document.querySelectorAll('.product-item');
 
+// Añadimos el evento de click a cada uno de ellos
+productItems.forEach(item => {
+  item.addEventListener('click', () => {
+    // Alternamos la clase 'clicked' al hacer clic
+    item.classList.toggle('clicked');
+  });
+});
 
   window.addEventListener("DOMContentLoaded", ready);
   window.addEventListener("load", loaded)
